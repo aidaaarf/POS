@@ -4,17 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\UserModel;
 use Illuminate\Http\Request;
+
 use Hash;
 use DB;
 
 class UserController extends Controller
 {
-    public function index()
-    {
+    // public function index()
+    // {
 
-        $user = UserModel::all();
-        return view('user', ['data' => $user]);
-    }
+    //     $user = UserModel::all();
+    //     return view('user', ['data' => $user]);
+    // }
 
     public function tambah(){
         return view('user_tambah');
@@ -55,6 +56,11 @@ class UserController extends Controller
         $user->delete();
 
         return redirect('/user');
+    }
+
+    public function index(){
+        $user = UserModel::with('level')->get();
+        return view('user', ['data' => $user]);
     }
         // $user = UserModel::create([ 
         //     'username' => 'manager11',
