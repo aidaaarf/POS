@@ -11,7 +11,7 @@
                     <li class="breadcrumb-item">{{ $value }}</li>
                  @endif
                 @endforeach
-            </ol>
+          </ol>
         </div>
       </div>
     </div>
