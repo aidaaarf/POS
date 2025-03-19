@@ -43,7 +43,7 @@ class UserController extends Controller
                 $btn .= '<form class="d-inline-block" method="POST" action="' . url('/user/' . $user->user_id) . '">'
                     . csrf_field()
                     . method_field('DELETE')
-                    . '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm("Apakah Anda yakin menghapus data ini?");">Hapus</button>'
+                    . '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm (\'Apakah Anda yakin menghapus data ini?\';">Hapus</button>'
                     . '</form>';
 
                 return $btn;
