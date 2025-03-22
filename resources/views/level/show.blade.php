@@ -22,8 +22,8 @@
                         <td>{{ $level->level_nama }}</td>
                     </tr>
                     <tr>
-                        <th>Level Code</th>
-                        <td>{{ $level->level_code }}</td>
+                        <th>Level kode</th>
+                        <td>{{ $level->level_kode }}</td>
                     </tr>
                     <tr>
                         <th>Level Nama</th>

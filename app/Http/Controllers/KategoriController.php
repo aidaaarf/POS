@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\KategoriModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Validator;
 
 class KategoriController extends Controller
 {
@@ -32,18 +33,17 @@ class KategoriController extends Controller
         return DataTables::of($kategories)
             ->addIndexColumn()
             ->addColumn('aksi', function ($kategori) {
-                $btn  = '<a href="' . url('/kategori/' . $kategori->kategori_id) . '" class="btn btn-info btn-sm">Detail</a> ';
-                $btn .= '<a href="' . url('/kategori/' . $kategori->kategori_id . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
-                $btn .= '<form class="d-inline-block" method="POST" action="' . url('/kategori/' . $kategori->kategori_id) . '">'
-                    . csrf_field()
-                    . method_field('DELETE')
-                    . '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button>'
-                    . '</form>';
+
+                $btn  = '<button onclick="modalAction(\'' . url('/kategori/' . $kategori->kategori_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/kategori/' . $kategori->kategori_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/kategori/' . $kategori->kategori_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
+
                 return $btn;
             })
             ->rawColumns(['aksi'])
             ->make(true);
     }
+
 
     public function create()
     {
@@ -144,6 +144,127 @@ class KategoriController extends Controller
             return redirect('/kategori')->with('success', 'Data kategori berhasil dihapus');
         } catch (\Illuminate\Database\QueryException $e) {
             return redirect('/kategori')->with('error', 'Data kategori gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
+        }
+    }
+    public function create_ajax()
+    {
+        return view('kategori.create_ajax');
+    }
+    
+
+    public function store_ajax(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'kategori_kode' => 'required|string|max:100|unique:m_kategori,kategori_kode',
+            'kategori_nama' => 'required|string|max:100',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Terjadi kesalahan pada inputan!',
+                'msgField' => $validator->errors()
+            ]);
+        }
+    
+        KategoriModel::create([
+            'kategori_kode' => $request->kategori_kode,
+            'kategori_nama' => $request->kategori_nama,
+        ]);
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Data Kategori berhasil ditambahkan!',
+            'redirect' => url('/')
+        ]);
+    }
+    
+
+    public function edit_ajax(string $id)
+    {
+        $kategori = KategoriModel::find($id);
+
+        if (!$kategori) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan!',
+            ]);
+        }
+
+        return view('kategori.edit_ajax', ['kategori' => $kategori]);
+    }
+
+    public function update_ajax(Request $request, $id)
+    {
+        $kategori = KategoriModel::find($id);
+        if (!$kategori) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan!',
+            ]);
+        }
+
+        $validator = Validator::make($request->all(), [
+           'kategori_kode' => 'required|string|max:100|unique:m_kategori,kategori_kode',
+            'kategori_nama' => 'required|string|max:100',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Terjadi kesalahan pada inputan!',
+                'msgField' => $validator->errors()
+            ]);
+        }
+
+        // Update data kategori
+        $kategori->update([
+            'kategori_kode' => $request->kategori_kode,
+            'kategori_nama' => $request->kategori_nama,
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Data Kategori berhasil diperbarui!',
+            'redirect' => url('/kategori') // Redirect ke halaman kategori setelah update
+        ]);
+    }
+    public function confirm_ajax(string $id)
+    {
+        $kategori = KategoriModel::find($id);
+
+        if (!$kategori) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan!',
+            ]);
+        }
+
+        return view('kategori.confirm_ajax', ['kategori' => $kategori]);
+    }
+    public function delete_ajax($id)
+    {
+        $kategori = KategoriModel::find($id);
+
+        if (!$kategori) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan!',
+            ]);
+        }
+
+        try {
+            $kategori->delete();
+            return response()->json([
+                'status' => true,
+                'message' => 'Data Kategori berhasil dihapus!',
+                'redirect' => url('/kategori')
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data kategori gagal dihapus karena masih terkait dengan tabel lain!',
+            ]);
         }
     }
 }
