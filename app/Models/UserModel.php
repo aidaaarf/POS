@@ -17,7 +17,7 @@ class UserModel extends Authenticatable
     protected $table = 'm_user';
     protected $primaryKey = 'user_id';
 
-    protected $fillable = ['username', 'password', 'nama', 'level_id',  'cretaed_at', 'updated_at'];
+    protected $fillable = ['username', 'password', 'nama', 'level_id',  'created_at', 'updated_at'];
 
     public function level()
     {

@@ -3,7 +3,8 @@
     <!-- Sidebar user (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-            <img src="{{ asset('adminlte/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+            <img src="{{ asset('adminlte/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2"
+                alt="User Image">
         </div>
         <div class="info">
             <a href="#" class="d-block">Alexander Pierce</a>
@@ -38,7 +39,7 @@
                 <a href="{{ url('/level') }}" class="nav-link {{ ($activeMenu == 'level') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-layer-group"></i>
                     <p>Level User</p>
-                <a>
+                    <a>
             </li>
             <li class="nav-item">
                 <a href="{{ url('/user') }}" class="nav-link {{ ($activeMenu == 'user') ? 'active' : '' }}">
@@ -46,12 +47,12 @@
                     <p>Data User</p>
                 </a>
             <li>
-                <li class="nav-item">
-                    <a href="{{ url('/supplier') }}" class="nav-link {{ ($activeMenu == 'supplier') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-user"></i>
-                        <p>Data Supplier</p>
-                    </a>
-                <li>
+            <li class="nav-item">
+                <a href="{{ url('/supplier') }}" class="nav-link {{ ($activeMenu == 'supplier') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-user"></i>
+                    <p>Data Supplier</p>
+                </a>
+            <li>
             <li class="nav-header">Data Barang</li>
             <li class="nav-item">
                 <a href="{{ url('/kategori') }}" class="nav-link {{ ($activeMenu == 'kategori') ? 'active' : '' }}">
@@ -78,6 +79,16 @@
                     <p>Tranasaksi Penjualan</p>
                 </a>
             </li>
+            <!-- Logout -->
+            <div class="p-3 pb-4 mt-auto">
+                <form action="{{ route('logout') }}" method="POST" onsubmit="return confirm('Anda yakin ingin logout?')">
+                    @csrf
+                    <button type="submit" class="btn btn-danger btn-block text-left">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </form>
+            </div>
+
         </ul>
     </nav>
     <!-- /.sidebar-menu -->

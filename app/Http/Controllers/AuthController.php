@@ -40,4 +40,32 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         return redirect('login');
     }
+
+    public function register()
+    {
+        $levels = \App\Models\LevelModel::all(); 
+        return view('auth.register', compact('levels'));
+    }
+    
+
+public function postRegister(Request $request)
+{
+    $request->validate([
+        'username' => 'required|unique:m_user,username|min:4|max:20',
+        'nama' => 'required|max:100',
+        'password' => 'required|min:6|confirmed',
+        'level_id' => 'required|exists:m_level,level_id'
+    ]);
+
+    \App\Models\UserModel::create([
+        'username' => $request->username,
+        'nama' => $request->nama,
+        'password' => bcrypt($request->password),
+        'level_id' => $request->level_id
+    ]);
+
+    return redirect()->route('login')->with('success', 'Registrasi berhasil. Silakan login.');
+}
+
+
 }
