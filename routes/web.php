@@ -126,7 +126,6 @@ Route::middleware(['authorize:ADM,MNG'])->group(function () {
         Route::get('/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']);
         Route::delete('/{id}/delete_ajax', [BarangController::class, 'delete_ajax']);
         Route::delete('/{id}', [BarangController::class, 'destroy']);
-
         Route::get('/{id}', [BarangController::class, 'show']);
     });
 });
