@@ -51,6 +51,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('/ajax', [UserController::class, 'store_ajax']);
     Route::get('/import', [UserController::class, 'import']);
     Route::post('/import_ajax', [UserController::class, 'import_ajax']);
+    Route::get('/export_excel', [UserController::class, 'export_excel']);
     Route::get('/{id}', [UserController::class, 'show']);
     Route::get('/{id}/edit', [UserController::class, 'edit']);
     Route::put('/{id}', [UserController::class, 'update']);
@@ -74,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/level/ajax', [LevelController::class, 'store_ajax']);
         Route::get('/level/import', [LevelController::class, 'import']);
         Route::post('/level/import_ajax', [LevelController::class, 'import_ajax']);
+        Route::get('/level/export_excel', [LevelController::class, 'export_excel']);
         Route::get('/level/{id}', [LevelController::class, 'show']);
         Route::get('/level/{id}/edit', [LevelController::class, 'edit']);
         Route::put('/level/{id}', [LevelController::class, 'update']);
@@ -94,6 +96,7 @@ Route::group(['prefix' => 'kategori'], function () {
     Route::post('/ajax', [KategoriController::class, 'store_ajax']);
     Route::get('/import', [KategoriController::class, 'import']);
     Route::post('/import_ajax', [KategoriController::class, 'import_ajax']);
+    Route::get('/export_excel', [KategoriController::class, 'export_excel']);
     Route::get('/{id}', [KategoriController::class, 'show']);
     Route::get('/{id}/edit', [KategoriController::class, 'edit']);
     Route::put('/{id}', [KategoriController::class, 'update']);
@@ -114,7 +117,8 @@ Route::middleware(['authorize:ADM,MNG'])->group(function () {
         Route::post('/ajax', [BarangController::class, 'store_ajax']);
         Route::get('/import', [BarangController::class, 'import']);
         Route::post('/import_ajax', [BarangController::class, 'import_ajax']);
-
+        Route::get('/export_excel', [BarangController::class, 'export_excel']);
+        Route::get('/export_pdf', [BarangController::class, 'export_pdf']);
         Route::get('/{id}/edit', [BarangController::class, 'edit']);
         Route::put('/{id}', [BarangController::class, 'update']);
         Route::get('/{id}/edit_ajax', [BarangController::class, 'edit_ajax']);
@@ -137,6 +141,7 @@ Route::group(['prefix' => 'supplier'], function () {
     Route::post('/ajax', [SupplierController::class, 'store_ajax']);
     Route::get('/import', [SupplierController::class, 'import']);
     Route::post('/import_ajax', [SupplierController::class, 'import_ajax']);
+    Route::get('/export_excel', [SupplierController::class, 'export_excel']);
     Route::get('/{id}', [SupplierController::class, 'show']);
     Route::get('/{id}/edit', [SupplierController::class, 'edit']);
     Route::put('/{id}', [SupplierController::class, 'update']);
