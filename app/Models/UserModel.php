@@ -18,6 +18,9 @@ class UserModel extends Authenticatable
     protected $primaryKey = 'user_id';
 
     protected $fillable = ['username', 'password', 'nama', 'level_id',  'created_at', 'updated_at'];
+    protected $hidden = ['password'];
+
+    protected $casts = ['password' => 'hashed'];
 
     public function level()
     {

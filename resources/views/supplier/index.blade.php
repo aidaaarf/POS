@@ -5,6 +5,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
+                <button onclick="modalAction('/supplier/import')" class="btn btn-primary">Import Supplier</button>
                 <a class="btn btn-sm btn-primary mt-1" href="{{ url('supplier/create') }}">Tambah</a>
                 <button onclick="modalAction('{{ url('supplier/create_ajax') }}')" class="btn btn-sm btn-success mt-1">
                     Tambah Ajax
@@ -22,7 +23,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Supplier Code</th>
+                        <th>Supplier Kode</th>
                         <th>Supplier Nama</th>
                         <th>Supplier Alamat</th>
                         <th>Aksi</th>
@@ -47,26 +48,14 @@
 
 @push('js')
     <script>
-        function modalAction(url) {
-            $.ajax({
-                url: url,
-                type: "GET",
-                success: function (response) {
-                    $("#modal-body-content").html(response); // Load form ke dalam modal
-                    $('#myModal').modal('show'); // Tampilkan modal
-                },
-                error: function () {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Gagal mengambil form, coba lagi.'
-                    });
-                }
+             function modalAction(url = '') {
+            $('#myModal').load(url, function () {
+                $('#myModal').modal('show');
             });
         }
-
+        var dataSupplier;
         $(document).ready(function () {
-            $('#table_supplier').DataTable({
+            dataSupplier = $('#table_supplier').DataTable({
                 serverSide: true,
                 ajax: {
                     'url': "{{ url('supplier/list') }}",

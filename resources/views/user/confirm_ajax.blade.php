@@ -101,8 +101,7 @@
     </div>
 @else
 
-    <form action="{{ url('/user/' . $user->user_id . '/delete_ajax') }}" method="POST" id="form-
-    delete">
+    <form action="{{ url('/user/' . $user->user_id . '/delete_ajax') }}" method="POST" id="form-delete">
 
         @csrf
         @method('DELETE')

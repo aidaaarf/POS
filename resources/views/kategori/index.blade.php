@@ -5,6 +5,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
+                <button onclick="modalAction('/kategori/import')" class="btn btn-primary">Import Kategori</button>
                 <a class="btn btn-sm btn-primary mt-1" href="{{ url('kategori/create') }}">Tambah</a>
                 <button onclick="modalAction('{{ url('kategori/create_ajax') }}')" class="btn btn-sm btn-success mt-1">
                     Tambah Ajax
@@ -30,16 +31,8 @@
             </table>
         </div>
     </div>
-    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-body" id="modal-body-content">
-                    <!-- Form akan dimuat lewat AJAX -->
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static"
+        data-keyboard="false" data-width="75%" aria-hidden="true"></div>
 @endsection
 
 @push('css')
@@ -47,25 +40,14 @@
 
 @push('js')
     <script>
-        function modalAction(url) {
-            $.ajax({
-                url: url,
-                type: "GET",
-                success: function (response) {
-                    $("#modal-body-content").html(response); 
-                    $('#myModal').modal('show'); 
-                },
-                error: function () {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Gagal mengambil form, coba lagi.'
-                    });
-                }
+        function modalAction(url = '') {
+            $('#myModal').load(url, function () {
+                $('#myModal').modal('show');
             });
         }
+        var dataKategori;
         $(document).ready(function() {
-            var dataKategori = $('#table_kategori').DataTable({
+            dataKategori = $('#table_kategori').DataTable({
                 serverSide: true,
                 ajax: {
                     'url': "{{ url('kategori/list') }}",

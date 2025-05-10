@@ -18,8 +18,7 @@
     </div>
 @else
 
-    <form action="{{ url('/user/' . $user->user_id . '/update_ajax') }}" method="POST" id="form-
-    edit">
+    <form action="{{ url('/user/' . $user->user_id . '/update_ajax') }}" method="POST" id="form-edit">
 
         @csrf
         @method('PUT')
@@ -90,7 +89,7 @@
                     level_id: { required: true, number: true },
                     username: { required: true, minlength: 3, maxlength: 20 },
                     nama: { required: true, minlength: 3, maxlength: 100 },
-                    password: { minlength: 6, maxlength: 20 }
+                    password: { required: false, minlength: 5, maxlength: 20 }
                 },
                 submitHandler: function (form) {
                     $.ajax({
