@@ -11,9 +11,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\SupplierController;
-
-
-
+use App\Models\User;
 
 // Route::get('/', [HomeController::class, 'index']);
 
@@ -51,6 +49,8 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('/', [UserController::class, 'store']);
     Route::get('/create_ajax', [UserController::class, 'create_ajax']);
     Route::post('/ajax', [UserController::class, 'store_ajax']);
+    Route::get('/import', [UserController::class, 'import']);
+    Route::post('/import_ajax', [UserController::class, 'import_ajax']);
     Route::get('/{id}', [UserController::class, 'show']);
     Route::get('/{id}/edit', [UserController::class, 'edit']);
     Route::put('/{id}', [UserController::class, 'update']);
@@ -108,7 +108,9 @@ Route::middleware(['authorize:ADM,MNG'])->group(function () {
         Route::post('/', [BarangController::class, 'store']);
         Route::get('/create_ajax', [BarangController::class, 'create_ajax']);
         Route::post('/ajax', [BarangController::class, 'store_ajax']);
-        Route::get('/{id}', [BarangController::class, 'show']);
+        Route::get('/import', [BarangController::class, 'import']);
+        Route::post('/import_ajax', [BarangController::class, 'import_ajax']);
+
         Route::get('/{id}/edit', [BarangController::class, 'edit']);
         Route::put('/{id}', [BarangController::class, 'update']);
         Route::get('/{id}/edit_ajax', [BarangController::class, 'edit_ajax']);
@@ -116,8 +118,11 @@ Route::middleware(['authorize:ADM,MNG'])->group(function () {
         Route::get('/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']);
         Route::delete('/{id}/delete_ajax', [BarangController::class, 'delete_ajax']);
         Route::delete('/{id}', [BarangController::class, 'destroy']);
+
+        Route::get('/{id}', [BarangController::class, 'show']);
     });
 });
+
 
 Route::group(['prefix' => 'supplier'], function () {
     Route::get('/',  [SupplierController::class, 'index']);
