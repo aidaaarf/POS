@@ -52,6 +52,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('/import', [UserController::class, 'import']);
     Route::post('/import_ajax', [UserController::class, 'import_ajax']);
     Route::get('/export_excel', [UserController::class, 'export_excel']);
+    Route::get('/export_pdf', [UserController::class, 'export_pdf']);
     Route::get('/{id}', [UserController::class, 'show']);
     Route::get('/{id}/edit', [UserController::class, 'edit']);
     Route::put('/{id}', [UserController::class, 'update']);
@@ -76,6 +77,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/level/import', [LevelController::class, 'import']);
         Route::post('/level/import_ajax', [LevelController::class, 'import_ajax']);
         Route::get('/level/export_excel', [LevelController::class, 'export_excel']);
+        Route::get('/level/export_pdf', [LevelController::class, 'export_pdf']);
         Route::get('/level/{id}', [LevelController::class, 'show']);
         Route::get('/level/{id}/edit', [LevelController::class, 'edit']);
         Route::put('/level/{id}', [LevelController::class, 'update']);
@@ -97,6 +99,7 @@ Route::group(['prefix' => 'kategori'], function () {
     Route::get('/import', [KategoriController::class, 'import']);
     Route::post('/import_ajax', [KategoriController::class, 'import_ajax']);
     Route::get('/export_excel', [KategoriController::class, 'export_excel']);
+    Route::get('/export_pdf', [KategoriController::class, 'export_pdf']);
     Route::get('/{id}', [KategoriController::class, 'show']);
     Route::get('/{id}/edit', [KategoriController::class, 'edit']);
     Route::put('/{id}', [KategoriController::class, 'update']);
@@ -141,6 +144,7 @@ Route::group(['prefix' => 'supplier'], function () {
     Route::get('/import', [SupplierController::class, 'import']);
     Route::post('/import_ajax', [SupplierController::class, 'import_ajax']);
     Route::get('/export_excel', [SupplierController::class, 'export_excel']);
+    Route::get('/export_pdf', [SupplierController::class, 'export_pdf']);
     Route::get('/{id}', [SupplierController::class, 'show']);
     Route::get('/{id}/edit', [SupplierController::class, 'edit']);
     Route::put('/{id}', [SupplierController::class, 'update']);

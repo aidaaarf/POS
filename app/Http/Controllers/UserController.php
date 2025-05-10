@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\UserModel;
 use App\Models\LevelModel;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Validator;
@@ -397,6 +398,22 @@ class UserController extends Controller
         $writer->save('php://output');
         exit;
         // end function export excel
+    }
+
+        public function export_pdf()
+    {
+        $user = UserModel::select('username', 'nama', 'level_id')
+            ->orderBy('user_id')
+            ->with('level')
+            ->get();
+
+        // use Barryvdh\DomPDF\Facade\Pdf;
+        $pdf = Pdf::loadView('user.export_pdf', ['user' => $user]);
+        $pdf->setPaper('a4', 'portrait'); // set ukuran kertas dan orientasi
+        $pdf->setOption("isRemoteEnabled", true); // set true jika ada gambar dari url
+        $pdf->render();
+
+        return $pdf->stream('Data user ' . date('Y-m-d H:i:s') . '.pdf');
     }
 }
 
