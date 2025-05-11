@@ -11,6 +11,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\ProfilController;
 use App\Models\User;
 
 // Route::get('/', [HomeController::class, 'index']);
@@ -42,25 +43,25 @@ use App\Models\User;
 
 Route::get('/', [WelcomeController::class, 'index']);
 
-Route::group(['prefix' => 'user'], function () {
-    Route::get('/', [UserController::class, 'index']);
-    Route::post('/list', [UserController::class, 'list']);
-    Route::get('/create', [UserController::class, 'create']);
-    Route::post('/', [UserController::class, 'store']);
-    Route::get('/create_ajax', [UserController::class, 'create_ajax']);
-    Route::post('/ajax', [UserController::class, 'store_ajax']);
-    Route::get('/import', [UserController::class, 'import']);
-    Route::post('/import_ajax', [UserController::class, 'import_ajax']);
-    Route::get('/export_excel', [UserController::class, 'export_excel']);
-    Route::get('/export_pdf', [UserController::class, 'export_pdf']);
-    Route::get('/{id}', [UserController::class, 'show']);
-    Route::get('/{id}/edit', [UserController::class, 'edit']);
-    Route::put('/{id}', [UserController::class, 'update']);
-    Route::get('/{id}/edit_ajax', [UserController::class, 'edit_ajax']);
-    Route::put('/{id}/update_ajax', [UserController::class, 'update_ajax']);
-    Route::get('/{id}/delete_ajax', [UserController::class, 'confirm_ajax']);
-    Route::delete('/{id}/delete_ajax', [UserController::class, 'delete_ajax']);
-    Route::delete('/{id}', [UserController::class, 'destroy']);
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('/', [UserController::class, 'index']);
+        Route::post('/list', [UserController::class, 'list']);
+        Route::get('/create', [UserController::class, 'create']);
+        Route::post('/', [UserController::class, 'store']);
+        Route::get('/create_ajax', [UserController::class, 'create_ajax']);
+        Route::post('/ajax', [UserController::class, 'store_ajax']);
+        Route::get('/import', [UserController::class, 'import']);
+        Route::post('/import_ajax', [UserController::class, 'import_ajax']);
+        Route::get('/export_excel', [UserController::class, 'export_excel']);
+        Route::get('/export_pdf', [UserController::class, 'export_pdf']);
+        Route::get('/{id}', [UserController::class, 'show']);
+        Route::get('/{id}/edit', [UserController::class, 'edit']);
+        Route::put('/{id}', [UserController::class, 'update']);
+        Route::get('/{id}/edit_ajax', [UserController::class, 'edit_ajax']);
+        Route::put('/{id}/update_ajax', [UserController::class, 'update_ajax']);
+        Route::get('/{id}/delete_ajax', [UserController::class, 'confirm_ajax']);
+        Route::delete('/{id}/delete_ajax', [UserController::class, 'delete_ajax']);
+        Route::delete('/{id}', [UserController::class, 'destroy']);
 });
 
 
@@ -165,3 +166,8 @@ Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/register', [AuthController::class, 'postRegister']);
 
 
+Route::group(['prefix' => 'profil'], function () {
+    Route::get('/',  [ProfilController::class, 'index']);
+    Route::get('/{id}/edit_image',  [ProfilController::class, 'editImage']);
+    Route::put('/{id}/update_image',  [ProfilController::class, 'updateImage']);
+});
