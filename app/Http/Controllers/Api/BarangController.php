@@ -22,7 +22,10 @@ class BarangController extends Controller
             'harga_beli' => 'required|numeric|min:0',
             'harga_jual' => 'required|numeric|min:0|gte:harga_beli',
             'kategori_id' => 'required|exists:m_kategori,kategori_id',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
+
+        $image = $request->file('image');
 
         // Simpan data barang ke database
         $barang = BarangModel::create([
@@ -31,6 +34,7 @@ class BarangController extends Controller
             'harga_beli' => $request->harga_beli,
             'harga_jual' => $request->harga_jual,
             'kategori_id' => $request->kategori_id,
+            'image' => $image->hashName()
         ]);
 
         // Kembalikan response JSON

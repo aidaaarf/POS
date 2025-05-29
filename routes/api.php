@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\KategoriController;
-use App\Http\Controllers\BarangController;
+use App\Http\Controllers\Api\BarangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,3 +52,4 @@ Route::put('barangs/{barang}', [BarangController::class, 'update']);
 Route::delete('barangs/{barang}', [BarangController::class, 'destroy']);
 
 Route::post('/register1', App\Http\Controllers\Api\RegisterController::class)->name('register1');
+Route::post('/transaksi1', [BarangController::class, 'store'])->name('transaksi1');
